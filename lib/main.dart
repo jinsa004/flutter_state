@@ -24,9 +24,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int num = 1;
-  void increase() {
+  void increase(int n) {
     setState(() {
-      num++; // 변수 값을 바꾸기 위해서는 setState()를 사용해줘야 한다.
+      num = num + n; // 변수 값을 바꾸기 위해서는 setState()를 사용해줘야 한다.
     });
   }
 
@@ -39,9 +39,9 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(child: AComponent(num)),
-          Expanded(
-              child:
-                  BComponent(increase)), // increase 메서드를 실행이 아닌 전달하기 때문에() 안씀
+          Expanded(child: BComponent((n) {
+            increase(n);
+          })), // increase 메서드를 실행이 아닌 전달하기 때문에() 안씀
         ],
       ),
     );
@@ -89,12 +89,34 @@ class BComponent extends StatelessWidget {
             child: Align(
               child: ElevatedButton(
                 onPressed: () {
-                  increase();
+                  increase(3);
                 },
                 child: Text("숫자증가",
                     style:
                         TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
               ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CComponent extends StatelessWidget {
+  const CComponent({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.green,
+      child: Column(
+        children: [
+          Text("CComponent"),
+          Expanded(
+            child: Align(
+              child: Text("안움직여용",
+                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
             ),
           ),
         ],
