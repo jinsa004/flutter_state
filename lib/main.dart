@@ -10,7 +10,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      home: Row(
+        children: [
+          Expanded(child: HomePage()),
+          Expanded(child: CComponent()),
+        ],
+      ),
     );
   }
 }
@@ -39,9 +44,11 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(child: AComponent(num)),
-          Expanded(child: BComponent((n) {
-            increase(n);
-          })), // increase 메서드를 실행이 아닌 전달하기 때문에() 안씀
+          Expanded(
+            child: BComponent((n) {
+              increase(n); // increase 메서드를 실행이 아닌 전달하기 때문에() 안씀
+            }),
+          ), // increase 메서드를 실행이 아닌 전달하기 때문에() 안씀
         ],
       ),
     );
@@ -112,11 +119,19 @@ class CComponent extends StatelessWidget {
       color: Colors.green,
       child: Column(
         children: [
-          Text("CComponent"),
+          Text(
+            "CComponent",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
           Expanded(
             child: Align(
               child: Text("안움직여용",
-                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold)),
             ),
           ),
         ],
